@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.7in">
+
+
+        <ImageView
+            android:id="@+id/img_dialog_chnet"
+            android:layout_marginBottom="0.4in"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_no_net"
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+
+        <TextView
+
+            android:id="@+id/title_dialog_chnet"
+            android:textSize="25sp"
+            android:layout_marginTop="0.7in"
+            android:gravity="center"
+            android:text="اینترنت متصل نیست!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginTop="1.2in"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/try_dialog_chnet"
+                android:text="بررسی مجدد"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/finish_dialog_chnet"
+                android:text="بی خیال"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
