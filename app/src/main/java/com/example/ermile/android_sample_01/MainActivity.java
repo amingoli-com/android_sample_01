@@ -1,10 +1,13 @@
 package com.example.ermile.android_sample_01;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -12,11 +15,18 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,18 +45,25 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     public Handler mHandler;
     public boolean continue_or_stop;
     Toolbar toolbars;
+
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
 
     ViewPager viewPager;
     TabLayout tabLayout;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
+    //Fragment's
     Web_view oneFragment = new Web_view();
+    Support_my_Tiket twoFragment = new Support_my_Tiket();
 
 
     @Override
@@ -55,15 +72,46 @@ public class MainActivity extends AppCompatActivity {
         // Chek net
         new NetCheck().execute();
         // Chek net every 5 seconds
-        mHandler = new Handler(); continue_or_stop = true; new Thread(new Runnable() { @Override public void run() { while (continue_or_stop) { try { Thread.sleep(5000);mHandler.post(new Runnable() {@Override public void run() { new NetCheck().execute(); }}); } catch (Exception e) {} } }}).start();
+        mHandler = new Handler();
+        continue_or_stop = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (continue_or_stop) {
+                    try {
+                        Thread.sleep(5000);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                new NetCheck().execute();
+                            }
+                        });
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }).start();
+
         setContentView(R.layout.activity_main);
 
-        viewPager =  findViewById(R.id.viewPager);
-        tabLayout =  findViewById(R.id.tabLayout);
+        // tab for framgent
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tabLayout);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        toolbars = (Toolbar) findViewById(R.id.toolbars);
-        toolbars.setVisibility(View.GONE);
+        //toolbar
+        toolbars = findViewById(R.id.toolbars);
+        setSupportActionBar(toolbars);
+        //menu
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
+        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(this , drawerLayout ,toolbars , R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(myToggle);
+        myToggle.syncState();
+
+
+
+
 
 
         // JSON
@@ -86,17 +134,8 @@ public class MainActivity extends AppCompatActivity {
                         NotificationManager notifManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
                         notifManager.notify(0, notif);
 
-                        Boolean toolbar = response.getBoolean("toolbar");
                         String appname = response.getString("name");
-                        if (toolbar == true){
-                            toolbars.setVisibility(View.VISIBLE);
                             toolbars.setTitle(appname);
-                            setSupportActionBar(toolbars);
-                            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                        }else {
-                            Toast.makeText(MainActivity.this, "نشد", Toast.LENGTH_SHORT).show();
-                            toolbars.setVisibility(View.GONE);
-                        }
 
 
 
@@ -117,6 +156,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        int ss = 1;
+
+
+        if (ss == 1){
+            Notification.Builder nb = new Notification.Builder(MainActivity.this);
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            nb.setContentTitle("gi gi gi gim")
+                    .setContentText("jooooooooooooooooon")
+                    .setTicker("ayval")
+                    .setSmallIcon(android.R.drawable.stat_sys_download)
+                    .setAutoCancel(false)
+                    .setSound(alarmSound);
+            Notification notif = nb.build();
+            NotificationManager notifManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+            notifManager.notify(1, notif);
+        }
+
+
+
+
+
+
+
 
 
     }
@@ -124,7 +186,8 @@ public class MainActivity extends AppCompatActivity {
     {
         final Util.ViewPagerAdapter adapter = new Util.ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(oneFragment,"one");
+        adapter.addFragment(oneFragment,"اخبار سایت");
+        adapter.addFragment(twoFragment,"تیکت ها");
         viewPager.setAdapter(adapter);
     }
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:title="Inbox"
+            android:icon="@drawable/ic_no_net"
+            android:id="@+id/mail" />
+
+        <item
+            android:title="Starred"
+            android:icon="@drawable/ic_no_net"
+            android:id="@+id/star" />
+
+        <item
+            android:title="Trash"
+            android:icon="@drawable/ic_no_net"
+            android:id="@+id/trash" />
+
+    </group>
+
+    <item android:title="Other">
+        <menu>
+            <item
+                android:title="Archive"
+                android:icon="@drawable/ic_no_net"
+                android:id="@+id/archive" />
+            <item
+                android:title="Add 1"
+                android:icon="@drawable/ic_no_net"
+                android:id="@+id/add1" />
+            <item
+                android:title="Add 2"
+                android:icon="@drawable/ic_no_net"
+                android:id="@+id/add2" />
+            <item
+                android:title="Add 3"
+                android:icon="@drawable/ic_no_net"
+                android:id="@+id/add3" />
+            <item
+                android:title="Add 4"
+                android:icon="@drawable/ic_no_net"
+                android:id="@+id/add4" />
+            <item
+                android:title="Add 5"
+                android:icon="@drawable/ic_no_net"
+                android:id="@+id/add5" />
+
+        </menu>
+
+    </item>
+
+</menu>
