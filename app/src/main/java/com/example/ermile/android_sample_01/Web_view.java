@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,23 +46,30 @@ public class Web_view extends Fragment {
         // Inflate the layout for this fragment
         View web_view_fragment = inflater.inflate(R.layout.web_view, container, false);
 
-        final ProgressBar progressBar = web_view_fragment.findViewById(R.id.progress_webview);
         final WebView webView = web_view_fragment.findViewById(R.id.web_view);
-        webView.setWebViewClient(new WebViewClient());
-
-
-
+        final SwipeRefreshLayout swipe = web_view_fragment.findViewById(R.id.swipeContainer);
+        //------------------------------------------------------------
+        swipe.setRefreshing(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                swipe.setRefreshing(false);
+            }});
         // JSON
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/app.json", null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                 String url = response.getString("web");
-                 if (webView ==null){
-                     progressBar.setVisibility(View.VISIBLE);
-                 }else {progressBar.setVisibility(View.GONE);}
+                 final String url = response.getString("web");
                  webView.loadUrl(url);
+
+                 swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                     @Override
+                     public void onRefresh() {
+                         webView.loadUrl(url);
+                     }
+                 });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -74,6 +82,10 @@ public class Web_view extends Fragment {
             }
         });AppContoroler.getInstance().addToRequestQueue(req);
         // END JSON
+
+
+
+
         return web_view_fragment;
 
     }

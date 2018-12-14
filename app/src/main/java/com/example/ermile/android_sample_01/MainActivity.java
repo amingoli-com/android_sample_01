@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             toolbars.setVisibility(View.VISIBLE);
                             toolbars.setTitle(appname);
                             setSupportActionBar(toolbars);
-                            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                         }else {
                             Toast.makeText(MainActivity.this, "نشد", Toast.LENGTH_SHORT).show();
                             toolbars.setVisibility(View.GONE);
