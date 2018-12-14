@@ -15,10 +15,12 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,6 +29,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -48,7 +51,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public Handler mHandler;
     public boolean continue_or_stop;
     Toolbar toolbars;
@@ -105,9 +108,11 @@ public class MainActivity extends AppCompatActivity {
         //menu
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(this , drawerLayout ,toolbars , R.string.open,R.string.close);
         drawerLayout.addDrawerListener(myToggle);
         myToggle.syncState();
+        // **
 
 
 
@@ -182,6 +187,39 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    //menu
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int mId = item.getItemId();
+        switch (mId){
+
+            case R.id.mail:
+                Toast.makeText(this, "Maile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.add1:
+                Toast.makeText(this, "Add one", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+    // back for device
+    @Override
+    public void onBackPressed() {
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START) )
+        {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else
+        {
+            super.onBackPressed();
+        }
+    }
+    // add fragment
     private void setupViewPager(final ViewPager viewPager)
     {
         final Util.ViewPagerAdapter adapter = new Util.ViewPagerAdapter(getSupportFragmentManager());
@@ -190,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(twoFragment,"تیکت ها");
         viewPager.setAdapter(adapter);
     }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -262,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean th){
             if(th == true){
-                Toast.makeText(getApplicationContext(), "دستگاه شما به اینترنت متصل شد :)", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "دستگاه شما به اینترنت متصل شد :)", Toast.LENGTH_SHORT).show();
                 // new GetData().execute();
             }
             else{
