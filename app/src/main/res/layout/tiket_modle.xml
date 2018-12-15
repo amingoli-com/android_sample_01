@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ddd">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="15dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/Xtiket_title_one"
+                android:textColor="#000000"
+                android:textSize="30dp"
+                android:layout_margin="20dp"
+                android:text="مشکل من چیه؟"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/Xtiket_end_one"
+                    android:text="بسته شده"
+                    android:textSize="20dp"
+                    android:background="#ddd"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/Xtiket_answer_one"
+                    android:text="پاسخ داده شده"
+                    android:textSize="20dp"
+                    android:background="#ddd"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/Xtiket_time_one"
+                    android:text="1397/5/6"
+                    android:textSize="20dp"
+                    android:background="#ddd"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/Xtiket_id_one"
+                    android:text="3122"
+                    android:textSize="20dp"
+                    android:background="#ddd"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/Xtiket_user_one"
+                    android:text="8 گفتگو"
+                    android:textSize="20dp"
+                    android:background="#ddd"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
