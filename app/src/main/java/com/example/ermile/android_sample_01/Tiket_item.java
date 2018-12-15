@@ -1,5 +1,7 @@
 package com.example.ermile.android_sample_01;
 
+import android.support.v7.widget.CardView;
+
 public class Tiket_item {
     String tiket_title,
             tiket_answer,
@@ -16,7 +18,6 @@ public class Tiket_item {
         this.tiket_id = tiket_id;
         this.tiket_time = tiket_time;
     }
-
 
     public String getTiket_title() {
         return tiket_title;
@@ -65,4 +66,5 @@ public class Tiket_item {
     public void setTiket_time(String tiket_time) {
         this.tiket_time = tiket_time;
     }
+
 }

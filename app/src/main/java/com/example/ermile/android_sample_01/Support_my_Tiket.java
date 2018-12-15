@@ -41,6 +41,7 @@ public class Support_my_Tiket extends Fragment {
 
 
 
+
         List<Tiket_item> tiket_modle = new ArrayList<>();
         RecyclerView recyclerView = view.findViewById(R.id.recylerview_my_tiket);
         final Tiket_item_adapter adapter = new Tiket_item_adapter(tiket_modle, getContext(), new Tiket_item_adapter.ClickListener() {
@@ -50,17 +51,15 @@ public class Support_my_Tiket extends Fragment {
             }
         });
 
-
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(LayoutManager);
 
-        tiket_modle.add(new Tiket_item("amin","OK","بسته","عوض زاده","3125","1397/5/5"));
-        tiket_modle.add(new Tiket_item("aminamin","OK","بسته","عوض زاده","3125","1397/5/5"));
-        tiket_modle.add(new Tiket_item("aminaminamin","OK","بسته","عوض زاده","3125","1397/5/5"));
-        
-        tiket_modle.add(new Tiket_item("amin","OK","بسته","عوض زاده","3125","1397/5/5"));
-        tiket_modle.add(new Tiket_item("aminamin","OK","بسته","عوض زاده","3125","1397/5/5"));
-        tiket_modle.add(new Tiket_item("aminaminamin","OK","بسته","عوض زاده","3125","1397/5/5"));
+        tiket_modle.add(new Tiket_item("سلام مشکلم حل نشده","پاسخ داده شده","بسته","عوض زاده","3125","2018/12/15"));
+        tiket_modle.add(new Tiket_item("تغییر دامنه","پاسخ داده شده","بسته","عوض زاده","3425","2018/12/15"));
+        tiket_modle.add(new Tiket_item("فوری فوری","پاسخ داده شده","بسته","عوض زاده","3555","2018/12/15"));
+        tiket_modle.add(new Tiket_item("خرید هاست","پاسخ داده شده","بسته","عوض زاده","3925","2018/12/14"));
+        tiket_modle.add(new Tiket_item("چطور پرداخت کنم؟","پاسخ داده شده","بسته","عوض زاده","3825","2018/12/13"));
+        tiket_modle.add(new Tiket_item("سلام چطوری اعتماد کنم؟","پاسخ داده شده","بسته","عوض زاده","3325","2018/12/12"));
 
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

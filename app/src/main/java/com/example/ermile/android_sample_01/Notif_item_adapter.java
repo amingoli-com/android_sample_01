@@ -1,7 +1,6 @@
 package com.example.ermile.android_sample_01;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -15,15 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
-
-    List<Tiket_item> itemModles;
+    List<Notif_item> itemModles
+            ;
     Context context;
-    private ClickListener clickListener;
+    private Tiket_item_adapter.ClickListener clickListener;
 
-    public Tiket_item_adapter(List<Tiket_item> itemModles, Context context, ClickListener clickListener) {
+    public Notif_item_adapter(List<Notif_item> itemModles, Context context, Tiket_item_adapter.ClickListener clickListener) {
         this.itemModles = itemModles;
         this.context = context;
         this.clickListener = clickListener;
@@ -32,7 +30,7 @@ public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Tiket_item_adapter.MyListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.tiket_modle, parent, false));
+        return new Notif_item_adapter.MyListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.notif_modle, parent, false));
     }
 
     @Override
@@ -42,17 +40,11 @@ public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(new Date());
 
-        h.titles.setText(itemModles.get(position).getTiket_title());
-        h.answer.setText(itemModles.get(position).getTiket_answer());
-        h.ends.setText(itemModles.get(position).getTiket_end());
-        h.users.setText(itemModles.get(position).getTiket_user());
-        h.ids.setText(itemModles.get(position).getTiket_id());
-        h.times.setText(itemModles.get(position).getTiket_time());
-        String time = "2018/12/15";
-        if (h.times.getText() == time) {
-            h.cardView.setBackgroundColor(Color.parseColor("#FFE10202"));
-            h.cardView.setRadius(15f);
-        }
+//        h.titles.setText(itemModles.get(position).getTiket_title());
+        String id = itemModles.get(position).iNotif_id;
+        h.titles.setText("با احترام تیکت شماره" + id + "پاسخ داده شد");
+        h.timeis.setText(itemModles.get(position).iNotif_time);
+
 
 
     }
@@ -66,21 +58,17 @@ public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class MyListViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView titles,answer,ends,users,ids,times,timeis;
+        TextView titles,times,ids;
         CardView cardView;
 
 
         public MyListViewHolder(View itemView) {
             super(itemView);
-            titles = itemView.findViewById(R.id.Xtiket_title_one);
-            answer = itemView.findViewById(R.id.Xtiket_answer_one);
-            ends = itemView.findViewById(R.id.Xtiket_end_one);
-            users = itemView.findViewById(R.id.Xtiket_user_one);
-            ids = itemView.findViewById(R.id.Xtiket_id_one);
-            times = itemView.findViewById(R.id.Xtiket_time_one);
-            cardView = itemView.findViewById(R.id.cardview_mytiket);
 
-            timeis = itemView.findViewById(R.id.time_online);
+            titles = itemView.findViewById(R.id.notif_title);
+            times = itemView.findViewById(R.id.notif_time);
+//            ids = itemView.findViewById(R.id.);
+
 
 
 
