@@ -50,9 +50,8 @@ public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         h.times.setText(itemModles.get(position).getTiket_time());
         String time = "2018/12/15";
         if (h.times.getText() == time) {
-            h.cardView.setBackgroundColor(Color.parseColor("#FFE10202"));
-            h.cardView.setRadius(15f);
-        }
+            h.newtiket.setVisibility(View.VISIBLE);
+        }else {h.newtiket.setVisibility(View.GONE);}
 
 
     }
@@ -66,8 +65,7 @@ public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class MyListViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView titles,answer,ends,users,ids,times,timeis;
-        CardView cardView;
+        TextView titles,answer,ends,users,ids,times,newtiket;
 
 
         public MyListViewHolder(View itemView) {
@@ -78,9 +76,7 @@ public class Tiket_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             users = itemView.findViewById(R.id.Xtiket_user_one);
             ids = itemView.findViewById(R.id.Xtiket_id_one);
             times = itemView.findViewById(R.id.Xtiket_time_one);
-            cardView = itemView.findViewById(R.id.cardview_mytiket);
-
-            timeis = itemView.findViewById(R.id.time_online);
+            newtiket = itemView.findViewById(R.id.newtiket);
 
 
 

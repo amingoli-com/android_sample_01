@@ -42,11 +42,11 @@ public class Support_Notif extends Fragment {
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(LayoutManager);
 
-        notif_items.add(new Notif_items("3212","2018/12/15"));
-        notif_items.add(new Notif_items("4532","2018/12/14"));
-        notif_items.add(new Notif_items("4523","2018/12/14"));
-        notif_items.add(new Notif_items("3225","2018/12/12"));
-        notif_items.add(new Notif_items("1235","2018/12/11"));
+        notif_items.add(new Notif_items("3212","2018/12/15","yes"));
+        notif_items.add(new Notif_items("4532","2018/12/14","yes"));
+        notif_items.add(new Notif_items("4523","2018/12/14","no"));
+        notif_items.add(new Notif_items("3225","2018/12/12","yes"));
+        notif_items.add(new Notif_items("1235","2018/12/11","no"));
 
 
         recyclerView.setAdapter(adapter);

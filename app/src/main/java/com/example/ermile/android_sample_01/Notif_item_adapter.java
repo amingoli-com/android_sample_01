@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +40,11 @@ public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         String id = notif_items.get(position).getTitileid();
         h.idtitle.setText(" تیکت شماره " + id + " پاسخ داده شد ");
         h.dates.setText(notif_items.get(position).getDates());
+        String send_by_telegram = notif_items.get(position).getTelegram();
+
+        if (send_by_telegram == "yes"){
+            h.telegram.setVisibility(View.VISIBLE);
+        }else {h.telegram.setVisibility(View.GONE);}
 
     }
 
@@ -51,11 +57,13 @@ public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class MyListViewHolder extends RecyclerView.ViewHolder {
 
         TextView idtitle,dates;
+        LinearLayout telegram;
 
         public MyListViewHolder(View itemView) {
             super(itemView);
             idtitle = itemView.findViewById(R.id.notif_title);
             dates = itemView.findViewById(R.id.notif_time);
+            telegram = itemView.findViewById(R.id.send_by_telegram);
 
 
 

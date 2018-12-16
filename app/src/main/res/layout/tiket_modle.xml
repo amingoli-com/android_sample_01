@@ -98,8 +98,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/time_online"
-            android:text="1397"
+            android:visibility="gone"
+            android:id="@+id/newtiket"
+            android:layout_margin="10dp"
+            android:text="جدید"
+            android:textColor="#ff0000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
