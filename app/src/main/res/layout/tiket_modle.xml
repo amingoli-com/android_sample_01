@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ddd">
+    android:background="#fff">
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_mytiket"
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="15dp"
         android:layout_height="wrap_content">
 
@@ -39,7 +39,8 @@
                     android:id="@+id/Xtiket_end_one"
                     android:text="بسته شده"
                     android:textSize="20dp"
-                    android:background="#ddd"
+                    android:background="#fff"
+                    android:textColor="#000000"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_width="0dp" />
@@ -49,7 +50,8 @@
                     android:id="@+id/Xtiket_answer_one"
                     android:text="پاسخ داده شده"
                     android:textSize="20dp"
-                    android:background="#ddd"
+                    android:textColor="#056e00"
+                    android:background="#fff"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -57,7 +59,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -67,7 +69,7 @@
                     android:id="@+id/Xtiket_time_one"
                     android:text="1397/5/6"
                     android:textSize="20dp"
-                    android:background="#ddd"
+                    android:background="#fff"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_width="0dp" />
@@ -77,7 +79,7 @@
                     android:id="@+id/Xtiket_id_one"
                     android:text="3122"
                     android:textSize="20dp"
-                    android:background="#ddd"
+                    android:background="#fff"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -87,7 +89,7 @@
                     android:id="@+id/Xtiket_user_one"
                     android:text="8 گفتگو"
                     android:textSize="20dp"
-                    android:background="#ddd"
+                    android:background="#fff"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />

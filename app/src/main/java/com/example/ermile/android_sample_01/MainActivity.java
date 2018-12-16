@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Web_view oneFragment = new Web_view();
     Support_my_Tiket twoFragment = new Support_my_Tiket();
     Support_Notif treeFragment = new Support_Notif();
+    Ticket foreFragment = new Ticket();
 
 
     @Override
@@ -228,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.addFragment(oneFragment,"اخبار سایت");
         adapter.addFragment(twoFragment,"تیکت ها");
         adapter.addFragment(treeFragment,"پیام ها");
+        adapter.addFragment(foreFragment,"تیکت 3125");
         viewPager.setAdapter(adapter);
     }
 
