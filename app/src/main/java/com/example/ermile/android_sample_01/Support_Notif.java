@@ -30,9 +30,9 @@ public class Support_Notif extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.support__notif, container, false);
 
-        List<Notif_item> notif_items = new ArrayList<>();
+        List<Notif_items> notif_items = new ArrayList<>();
         RecyclerView recyclerView = view.findViewById(R.id.recylerview_my_notif);
-        final Notif_item_adapter adapter = new Notif_item_adapter(tiket_modle, getContext(), new Notif_item_adapter.ClickListener() {
+        Notif_item_adapter adapter = new Notif_item_adapter(notif_items , getContext() , new  Notif_item_adapter.ClickListener(){
             @Override
             public void onClick(View v, int pos) {
 
@@ -42,12 +42,15 @@ public class Support_Notif extends Fragment {
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(LayoutManager);
 
-        tiket_modle.add(new Tiket_item("سلام مشکلم حل نشده","پاسخ داده شده","بسته","عوض زاده","3125","2018/12/15"));
+        notif_items.add(new Notif_items("3212","2018/12/15"));
+        notif_items.add(new Notif_items("4532","2018/12/14"));
+        notif_items.add(new Notif_items("4523","2018/12/14"));
+        notif_items.add(new Notif_items("3225","2018/12/12"));
+        notif_items.add(new Notif_items("1235","2018/12/11"));
 
 
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
         return view;
     }
 

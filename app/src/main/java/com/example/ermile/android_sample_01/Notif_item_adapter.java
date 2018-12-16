@@ -1,7 +1,6 @@
 package com.example.ermile.android_sample_01;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +15,12 @@ import java.util.List;
 
 public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<Notif_item> itemModles
-            ;
+    List<Notif_items> notif_items;
     Context context;
-    private Tiket_item_adapter.ClickListener clickListener;
+    private ClickListener clickListener;
 
-    public Notif_item_adapter(List<Notif_item> itemModles, Context context, Tiket_item_adapter.ClickListener clickListener) {
-        this.itemModles = itemModles;
+    public Notif_item_adapter(List<Notif_items> notif_items, Context context, ClickListener clickListener) {
+        this.notif_items = notif_items;
         this.context = context;
         this.clickListener = clickListener;
     }
@@ -30,45 +28,34 @@ public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Notif_item_adapter.MyListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.notif_modle, parent, false));
+        return new Notif_item_adapter.MyListViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.notif_modle,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        final Tiket_item_adapter.MyListViewHolder h = (Tiket_item_adapter.MyListViewHolder) holder;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(new Date());
+        final Notif_item_adapter.MyListViewHolder h = (Notif_item_adapter.MyListViewHolder) holder;
 
-//        h.titles.setText(itemModles.get(position).getTiket_title());
-        String id = itemModles.get(position).iNotif_id;
-        h.titles.setText("با احترام تیکت شماره" + id + "پاسخ داده شد");
-        h.timeis.setText(itemModles.get(position).iNotif_time);
-
-
+        String id = notif_items.get(position).getTitileid();
+        h.idtitle.setText(" تیکت شماره " + id + " پاسخ داده شد ");
+        h.dates.setText(notif_items.get(position).getDates());
 
     }
 
     @Override
     public int getItemCount() {
-        return itemModles.size();
+        return notif_items.size();
     }
 
 
     class MyListViewHolder extends RecyclerView.ViewHolder {
 
-
-        TextView titles,times,ids;
-        CardView cardView;
-
+        TextView idtitle,dates;
 
         public MyListViewHolder(View itemView) {
             super(itemView);
-
-            titles = itemView.findViewById(R.id.notif_title);
-            times = itemView.findViewById(R.id.notif_time);
-//            ids = itemView.findViewById(R.id.);
-
+            idtitle = itemView.findViewById(R.id.notif_title);
+            dates = itemView.findViewById(R.id.notif_time);
 
 
 
@@ -85,12 +72,16 @@ public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //                    post_info_form.putExtra("post_name" , namee);
 //                    post_info_form.putExtra ( "post_tel" , telle );
 //                    view.getContext ().startActivity ( post_info_form );
+
+
                 }
             });
 
 
         }
     }
+
+
 
     public interface ClickListener {
         void onClick(View v, int pos);
