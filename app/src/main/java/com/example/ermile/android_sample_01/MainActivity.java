@@ -30,7 +30,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean continue_or_stop;
     Toolbar toolbars;
 
-    Boolean nav = false;
 
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
@@ -120,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(this , drawerLayout ,toolbars , R.string.open,R.string.close);
         drawerLayout.addDrawerListener(myToggle);
         myToggle.syncState();
+
         // **
 
 
