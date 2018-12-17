@@ -7,6 +7,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
@@ -29,6 +30,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public Handler mHandler;
     public boolean continue_or_stop;
     Toolbar toolbars;
+
+    Boolean nav = false;
 
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
@@ -106,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //toolbar
         toolbars = findViewById(R.id.toolbars);
         setSupportActionBar(toolbars);
+
+
         //menu
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
@@ -142,9 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         String appname = response.getString("name");
                             toolbars.setTitle(appname);
-
-
-
                     }
 
 
@@ -163,8 +167,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         int ss = 1;
-
-
         if (ss == 1){
             Notification.Builder nb = new Notification.Builder(MainActivity.this);
             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -208,6 +210,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
+
+
+
     // back for device
     @Override
     public void onBackPressed() {
