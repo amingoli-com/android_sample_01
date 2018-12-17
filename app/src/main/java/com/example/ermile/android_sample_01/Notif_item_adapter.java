@@ -1,6 +1,7 @@
 package com.example.ermile.android_sample_01;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,16 +73,14 @@ public class Notif_item_adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onClick(View view) {
 
-//                    clickListener.onClick(view,getAdapterPosition());
-//
-//                    String namee = itemModles.get(getAdapterPosition()).getName().toString();
-//                    String telle = itemModles.get(getAdapterPosition()).gettel().toString();
-//
-//                    Intent post_info_form = new Intent(view.getContext (), admin.class);
-//                    post_info_form.putExtra("post_name" , namee);
-//                    post_info_form.putExtra ( "post_tel" , telle );
-//                    view.getContext ().startActivity ( post_info_form );
+                    clickListener.onClick(view,getAdapterPosition());
 
+                    String sendid = notif_items.get(getAdapterPosition()).getTitileid().toString();
+                    Toast.makeText(context, sendid + "-"+ "ok", Toast.LENGTH_SHORT).show();
+
+                    Intent post_idTooTicket = new Intent(view.getContext (), Tickets.class);
+                    post_idTooTicket.putExtra("post_idTicket" , sendid);
+                    view.getContext ().startActivity ( post_idTooTicket );
 
                 }
             });

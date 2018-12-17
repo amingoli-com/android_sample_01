@@ -9,6 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.ermile.android_sample_01.network.AppContoroler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +40,9 @@ public class Support_Notif extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.support__notif, container, false);
 
-        List<Notif_items> notif_items = new ArrayList<>();
-        RecyclerView recyclerView = view.findViewById(R.id.recylerview_my_notif);
-        Notif_item_adapter adapter = new Notif_item_adapter(notif_items , getContext() , new  Notif_item_adapter.ClickListener(){
+        final List<Notif_items> notif_items = new ArrayList<>();
+        final RecyclerView recyclerView = view.findViewById(R.id.recylerview_my_notif);
+        final Notif_item_adapter adapter = new Notif_item_adapter(notif_items , getContext() , new  Notif_item_adapter.ClickListener(){
             @Override
             public void onClick(View v, int pos) {
 
@@ -42,31 +52,41 @@ public class Support_Notif extends Fragment {
         LinearLayoutManager LayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(LayoutManager);
 
-        notif_items.add(new Notif_items("3212","2018/12/15","yes"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4523","2018/12/14","no"));
-        notif_items.add(new Notif_items("4532","2018/12/14","yes"));
-        notif_items.add(new Notif_items("4532","2018/12/14","yes"));
-        notif_items.add(new Notif_items("4532","2018/12/14","yes"));
-        notif_items.add(new Notif_items("4532","2018/12/14","yes"));
-        notif_items.add(new Notif_items("3225","2018/12/12","no"));
-        notif_items.add(new Notif_items("1235","2018/12/11","no"));
+        //             JSON            //
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/json_app/user_1000.json", null, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+//                            array
+                    JSONArray contact2Array = response.getJSONArray("tic");
+                    for (int i = 0; i < contact2Array.length(); i++) {
+                        JSONObject obj = contact2Array.getJSONObject(i);
+                        String ticket = obj.getString("ticket");
+                        String date = obj.getString("date");
+                        String telegram = obj.getString("telegram");
+                        String title = obj.getString("title");
+                        String answer = obj.getString("answer");
+                        String user_answer = obj.getString("user_answer");
+                        String stuts = obj.getString("stuts");
+                        notif_items.add(new Notif_items(ticket,date,telegram));
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });AppContoroler.getInstance().addToRequestQueue(req);
 
 
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
         return view;
     }
 
