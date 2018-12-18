@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -18,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -80,26 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         // Chek net
         new NetCheck().execute();
-        // Chek net every 5 seconds
-        mHandler = new Handler();
-        continue_or_stop = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (continue_or_stop) {
-                    try {
-                        Thread.sleep(5000);
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                new NetCheck().execute();
-                            }
-                        });
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }).start();
+
 
         setContentView(R.layout.activity_main);
 
@@ -267,41 +250,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * Check Network
      */
-    public void ShowAlertDialog() {
-        final Dialog alertDialog = new Dialog(MainActivity.this);
-        alertDialog.setContentView(R.layout.net_chek);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        TextView title_dialog = alertDialog.findViewById(R.id.title_dialog_chnet);
-        title_dialog.setText("در اتصال به اینترنت مشکلی پیش آمده است!");
-        title_dialog.setTextSize(18);
-        Button btn_try = alertDialog.findViewById(R.id.try_dialog_chnet);
-        btn_try.setText("تلاش کن");
-        btn_try.setTextSize(12);
-        btn_try.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-                new MainActivity.NetCheck().execute();
-            }
-        });
 
-        Button btn_cancel = alertDialog.findViewById(R.id.finish_dialog_chnet);
-        btn_cancel.setText("ولش کن");
-        btn_cancel.setTextSize(12);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-    }
     /**
      * Async Task to check whether internet connection is working.
      **/
     public class NetCheck extends AsyncTask<String,String,Boolean>
     {
+
         @Override
         protected void onPreExecute(){
         }
@@ -334,11 +289,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(Boolean th){
             if(th == true){
-//                Toast.makeText(getApplicationContext(), "دستگاه شما به اینترنت متصل شد :)", Toast.LENGTH_SHORT).show();
-                // new GetData().execute();
+                // Chek net every 5 seconds
+                mHandler = new Handler();
+                continue_or_stop = true;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (continue_or_stop) {
+                            try {
+                                Thread.sleep(5000);
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new NetCheck().execute();
+                                    }
+                                });
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }).start();
+
             }
             else{
-                ShowAlertDialog();
+                View parentLayout = findViewById(android.R.id.content);
+                Snackbar snackbar = Snackbar.make(parentLayout, "به اینترنت متصل شوید", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("تلاش مجدد", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                new MainActivity.NetCheck().execute();
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        });
+                snackbar.setActionTextColor(Color.RED);
+                View sbView = snackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(Color.YELLOW);
+                snackbar.show();
+
+                // Chek net every 5 seconds
+                mHandler = new Handler();
+                continue_or_stop = true;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (continue_or_stop) {
+                            try {
+                                Thread.sleep(5000);
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new NetCheck().execute();
+                                    }
+                                });
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }).start();
             }
         }
     }
