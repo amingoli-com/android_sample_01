@@ -11,10 +11,14 @@
         android:id="@+id/recylerview_my_tiket"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-
-
     </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_tiket"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_plus"
+        android:layout_margin="26dp" />
 
 </FrameLayout>

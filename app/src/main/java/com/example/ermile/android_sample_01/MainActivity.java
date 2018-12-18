@@ -34,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabLayout;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    RelativeLayout tab_top , tab_bottom;
 
     //Fragment's
     Web_view oneFragment = new Web_view();
@@ -102,23 +104,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         // tab for framgent
-        viewPager = findViewById(R.id.viewPager);
-        tabLayout = findViewById(R.id.tabLayout);
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        //toolbar
-        toolbars = findViewById(R.id.toolbars);
-        setSupportActionBar(toolbars);
+        tab_bottom = findViewById(R.id.include_tabBottom);
+        tab_top = findViewById(R.id.include_tabTop);
+
+
 
 
         //menu
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(this , drawerLayout ,toolbars , R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(myToggle);
-        myToggle.syncState();
-
         // **
 
 
@@ -132,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResponse(JSONObject response) {
                 try {
+
+                    // new version for app
                     int app_version = response.getInt("version");
                     if (app_version > versionCode){
                         Notification.Builder nb = new Notification.Builder(MainActivity.this);
@@ -149,7 +146,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         String appname = response.getString("name");
                             toolbars.setTitle(appname);
                     }
+                    // toolbar and tab Top or Bottom?
+//                    is top
+                    boolean tab_pos = response.getBoolean("Tab_IsTop");
+                    if (tab_pos == true){
+                        tab_top.setVisibility(View.VISIBLE);
+                        viewPager = findViewById(R.id.viewPager_top);
+                        tabLayout = findViewById(R.id.tabLayout_top);
+                        toolbars = findViewById(R.id.toolbars_top);
 
+                        setupViewPager(viewPager);
+                        tabLayout.setupWithViewPager(viewPager);
+                        setSupportActionBar(toolbars);
+                        //menu
+                        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(MainActivity.this , drawerLayout ,toolbars , R.string.open,R.string.close);
+                        drawerLayout.addDrawerListener(myToggle);
+                        myToggle.syncState();
+
+                    }else {
+                        tab_bottom.setVisibility(View.VISIBLE);
+                        viewPager = findViewById(R.id.viewPager_bottom);
+                        tabLayout = findViewById(R.id.tabLayout_bottom);
+                        toolbars = findViewById(R.id.toolbars_bottom);
+
+                        setupViewPager(viewPager);
+                        tabLayout.setupWithViewPager(viewPager);
+                        setSupportActionBar(toolbars);
+                        //menu
+                        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(MainActivity.this , drawerLayout ,toolbars , R.string.open,R.string.close);
+                        drawerLayout.addDrawerListener(myToggle);
+                        myToggle.syncState();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
