@@ -27,7 +27,8 @@
             android:name=".MainActivity"
             android:label="Main Activity" />
         <activity android:name=".Tickets" />
-        <activity android:name=".SingUp"></activity>
+        <activity android:name=".SingUp" />
+        <activity android:name=".Support_AddTicket"></activity>
     </application>
 
 </manifest>

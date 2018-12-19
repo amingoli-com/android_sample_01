@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     // new version for app
                     int app_version = response.getInt("version");
-                    if (app_version > versionCode){
+                    if (versionCode < app_version){
                         Notification.Builder nb = new Notification.Builder(MainActivity.this);
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         nb.setContentTitle("بروزرسانی")

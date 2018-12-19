@@ -4,6 +4,7 @@ package com.example.ermile.android_sample_01;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class Support_my_Tiket extends Fragment {
         add_ticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                startActivity(new Intent(getActivity() , Support_AddTicket.class));
             }
         });
 
