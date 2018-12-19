@@ -28,7 +28,9 @@
             android:label="Main Activity" />
         <activity android:name=".Tickets" />
         <activity android:name=".SingUp" />
-        <activity android:name=".Support_AddTicket"></activity>
+        <activity android:name=".Support_AddTicket" />
+        <activity android:name=".Login" />
+        <activity android:name=".nav_header"></activity>
     </application>
 
 </manifest>

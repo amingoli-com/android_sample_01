@@ -102,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+        Menu menu = navigationView.getMenu();
+
+        MenuItem email = menu.findItem(R.id.mail);
+        MenuItem ad = menu.add("aaa");
+
+        email.setTitle("hello");
+        email.setVisible(true);
+
 
 
         // JSON
@@ -203,14 +211,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int mId = item.getItemId();
-        switch (mId){
+        int menuId = item.getItemId();
+        switch (menuId){
 
             case R.id.mail:
                 startActivity(new Intent(MainActivity.this , SingUp.class));
                 break;
-            case R.id.add1:
-                Toast.makeText(this, "Add one", Toast.LENGTH_SHORT).show();
+            case R.id.star:
+                startActivity(new Intent(MainActivity.this , Login.class));
                 break;
 
         }
