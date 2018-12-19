@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (mId){
 
             case R.id.mail:
-                Toast.makeText(this, "Maile", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this , SingUp.class));
                 break;
             case R.id.add1:
                 Toast.makeText(this, "Add one", Toast.LENGTH_SHORT).show();

@@ -11,7 +11,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +48,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Slide_Adapter extends AppCompatActivity {
+
+    public Handler mHandler;
+    public boolean continue_or_stop;
 
     ViewpagersAdapter PagerAdapter;  // for View page
     ViewPager viewpager; //  for dots & Button in XML
@@ -346,40 +351,6 @@ public class Slide_Adapter extends AppCompatActivity {
 
 
 
-    public void ShowAlertDialog() {
-        final Dialog alertDialog = new Dialog(Slide_Adapter.this);
-        alertDialog.setContentView(R.layout.net_chek);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        TextView title_dialog = alertDialog.findViewById(R.id.title_dialog_chnet);
-        title_dialog.setText("در اتصال به اینترنت مشکلی پیش آمده است!");
-        title_dialog.setTextSize(18);
-
-        Button btn_try = alertDialog.findViewById(R.id.try_dialog_chnet);
-        btn_try.setText("تلاش کن");
-        btn_try.setTextSize(12);
-        btn_try.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-                new NetCheck().execute();
-            }
-        });
-
-        Button btn_cancel = alertDialog.findViewById(R.id.finish_dialog_chnet);
-        btn_cancel.setText("ولش کن");
-        btn_cancel.setTextSize(12);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        alertDialog.setCancelable(false);
-        alertDialog.show();
-    }
-
 
 
     /**
@@ -388,18 +359,10 @@ public class Slide_Adapter extends AppCompatActivity {
 
     private class NetCheck extends AsyncTask<String,String,Boolean>
     {
-        private ProgressDialog nDialog;
 
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            nDialog = new ProgressDialog(Slide_Adapter.this);
-//            nDialog.setTitle("بررسی اینترنت");
-            nDialog.setMessage("درحال وصل شدن..");
-            nDialog.setIndeterminate(false);
-            nDialog.setCancelable(true);
-
-            nDialog.show();
         }
         /**
          * Gets current device state and checks for working internet connection by trying Google.
@@ -433,13 +396,64 @@ public class Slide_Adapter extends AppCompatActivity {
         protected void onPostExecute(Boolean th){
 
             if(th == true){
-                nDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "دستگاه شما به اینترنت متصل شد :)", Toast.LENGTH_SHORT).show();
-                // new GetData().execute();
+                // Chek net every 5 seconds
+                mHandler = new Handler();
+                continue_or_stop = true;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (continue_or_stop) {
+                            try {
+                                Thread.sleep(7000);
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new Slide_Adapter.NetCheck().execute();
+                                    }
+                                });
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }).start();
             }
             else{
-                nDialog.dismiss();
-                ShowAlertDialog();
+                View parentLayout = findViewById(android.R.id.content);
+                Snackbar snackbar = Snackbar.make(parentLayout, "به اینترنت متصل شوید", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("تلاش مجدد", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                new Slide_Adapter.NetCheck().execute();
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        });
+                snackbar.setActionTextColor(Color.RED);
+                View sbView = snackbar.getView();
+                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(Color.YELLOW);
+                snackbar.show();
+
+                // Chek net every 5 seconds
+                mHandler = new Handler();
+                continue_or_stop = true;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (continue_or_stop) {
+                            try {
+                                Thread.sleep(7000);
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new Slide_Adapter.NetCheck().execute();
+                                    }
+                                });
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }).start();
             }
         }
     }
