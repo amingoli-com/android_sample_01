@@ -1,16 +1,13 @@
 package com.example.ermile.android_sample_01;
 
+
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,7 +19,6 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -31,13 +27,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
-import android.text.Layout;
-import android.text.format.DateFormat;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,16 +39,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.ermile.android_sample_01.network.AppContoroler;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public Handler mHandler;
@@ -88,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new NetCheck().execute();
 
 
+
+
+
         setContentView(R.layout.activity_main);
 
         // tab for framgent
@@ -113,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         email.setTitle("hello");
         email.setVisible(true);
+
+
 
 
 

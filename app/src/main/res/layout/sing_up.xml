@@ -58,7 +58,7 @@
                 android:id="@+id/password"
                 android:hint="گذرواژه جدید"
                 android:layout_marginTop="10dp"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

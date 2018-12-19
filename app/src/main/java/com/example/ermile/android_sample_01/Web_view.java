@@ -46,6 +46,16 @@ public class Web_view extends Fragment {
         // Inflate the layout for this fragment
         View web_view_fragment = inflater.inflate(R.layout.web_view, container, false);
 
+
+
+
+
+
+
+
+
+
+
         final WebView webView = web_view_fragment.findViewById(R.id.web_view);
         final SwipeRefreshLayout swipe = web_view_fragment.findViewById(R.id.swipeContainer);
         //------------------------------------------------------------
