@@ -40,7 +40,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:id="@+id/navigation_view"
-        app:headerLayout="@layout/login"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_menu"/>
 
 </android.support.v4.widget.DrawerLayout>

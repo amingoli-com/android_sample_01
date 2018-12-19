@@ -31,7 +31,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.text.Layout;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean continue_or_stop;
     Toolbar toolbars;
 
+    // user is login and user & pass is: 519
+    int ids = 519;
 
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         email.setTitle("hello");
         email.setVisible(true);
+
 
 
 
@@ -247,9 +252,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         final Util.ViewPagerAdapter adapter = new Util.ViewPagerAdapter(getSupportFragmentManager());
 
+        if (ids == 519){
         adapter.addFragment(oneFragment,"اخبار سایت");
         adapter.addFragment(twoFragment,"تیکت ها");
         adapter.addFragment(treeFragment,"پیام ها");
+        }else {
+            adapter.addFragment(oneFragment,"اخبار سایت");
+            startActivity(new Intent(this,Login.class));
+        }
         viewPager.setAdapter(adapter);
     }
 
