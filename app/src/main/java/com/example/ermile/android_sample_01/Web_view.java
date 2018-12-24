@@ -66,7 +66,7 @@ public class Web_view extends Fragment {
                 swipe.setRefreshing(false);
             }});
         // JSON
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/app.json", null, new Response.Listener<JSONObject>()
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/json_app/app.json", null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {

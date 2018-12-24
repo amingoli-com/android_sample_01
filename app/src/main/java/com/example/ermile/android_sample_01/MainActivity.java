@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         // JSON
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/app.json", null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/json_app/app.json", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -233,20 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // END JSON
 
 
-        int ss = 1;
-        if (ss == 1) {
-            Notification.Builder nb = new Notification.Builder(MainActivity.this);
-            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            nb.setContentTitle("gi gi gi gim")
-                    .setContentText("jooooooooooooooooon")
-                    .setTicker("ayval")
-                    .setSmallIcon(android.R.drawable.stat_sys_download)
-                    .setAutoCancel(false)
-                    .setSound(alarmSound);
-            Notification notif = nb.build();
-            NotificationManager notifManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
-            notifManager.notify(1, notif);
-        }
+
 
 
     }

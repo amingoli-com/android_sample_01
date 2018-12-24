@@ -66,7 +66,7 @@ public class Tickets extends AppCompatActivity {
                             String name = obj.getString("name");
                             String des = obj.getString("des");
                             String date = obj.getString("date");
-                            item_testss.add(new item_test(name,date,des));
+                            item_testss.add(new item_test(name,des,date));
 
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();

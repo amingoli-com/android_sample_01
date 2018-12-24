@@ -105,7 +105,7 @@ public class Slide_Adapter extends AppCompatActivity {
         }
 
         // JSON Methods
-        StringRequest stringRequest3 = new StringRequest(Request.Method.GET, "http://mimsg.ir/app.json", new Response.Listener<String>() {
+        StringRequest stringRequest3 = new StringRequest(Request.Method.GET, "http://mimsg.ir/json_app/app.json", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -275,7 +275,7 @@ public class Slide_Adapter extends AppCompatActivity {
                 progress_slide.setVisibility(View.GONE);
             }
             // JSON Methods
-            StringRequest stringRequest3 = new StringRequest(Request.Method.GET, "http://mimsg.ir/app.json", new Response.Listener<String>() {
+            StringRequest stringRequest3 = new StringRequest(Request.Method.GET, "http://mimsg.ir/json_app/app.json", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     try {
