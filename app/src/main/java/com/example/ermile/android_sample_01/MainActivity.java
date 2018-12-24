@@ -35,6 +35,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.ermile.android_sample_01.network.AppContoroler;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView netview;
 
     // user is login and user & pass is: 519
-    int ids = 519;
+    int ids = 195191378;
 
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
@@ -182,6 +183,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         NotificationManager notifManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
                         notifManager.notify(0, notif);
                     }
+                    // notif
+                    boolean notif_bol = response.getBoolean("notif");
+                    String notif_title = response.getString("title_notif");
+                    String notif_des = response.getString("des_notif");
+                    if (notif_bol == true) {
+                        Notification.Builder nb = new Notification.Builder(MainActivity.this);
+                        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        nb.setContentTitle(notif_title)
+                                .setContentText(notif_des)
+                                .setTicker("برو دانلود کن دیگه")
+                                .setSmallIcon(android.R.drawable.stat_sys_download)
+                                .setAutoCancel(false)
+                                .setSound(alarmSound);
+                        Notification notif = nb.build();
+                        NotificationManager notifManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                        notifManager.notify(1, notif);
+                    }
                     // toolbar and tab Top or Bottom?
 //                    is top
                     boolean tab_pos = response.getBoolean("Tab_IsTop");
@@ -278,15 +296,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupViewPager(final ViewPager viewPager) {
         final Util.ViewPagerAdapter adapter = new Util.ViewPagerAdapter(getSupportFragmentManager());
 
-        if (ids == 519) {
-            adapter.addFragment(oneFragment, "اخبار سایت");
-            adapter.addFragment(twoFragment, "تیکت ها");
-            adapter.addFragment(treeFragment, "پیام ها");
-        } else {
-            adapter.addFragment(oneFragment, "اخبار سایت");
-            startActivity(new Intent(this, Login.class));
-        }
-        viewPager.setAdapter(adapter);
+        //             JSON            //
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/json_app/user_1000.json", null, new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+//                            array
+                    int id_json = response.getInt("id_user");
+
+                    if (id_json == ids) {
+                        adapter.addFragment(oneFragment, "اخبار سایت");
+                        adapter.addFragment(twoFragment, "تیکت ها");
+                        adapter.addFragment(treeFragment, "پیام ها");
+                    } else {
+                        adapter.addFragment(oneFragment, "اخبار سایت");
+                        startActivity(new Intent(MainActivity.this, Login.class));
+                    }
+                    viewPager.setAdapter(adapter);
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });AppContoroler.getInstance().addToRequestQueue(req);
+
+
     }
 
 
