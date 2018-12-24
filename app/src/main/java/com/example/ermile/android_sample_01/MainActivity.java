@@ -85,6 +85,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Chek net
         new NetCheck().execute();
+        // Chek net every 5 seconds
+        mHandler = new Handler();
+        continue_or_stop = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (continue_or_stop) {
+                    try {
+                        Thread.sleep(10000);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                new NetCheck().execute();
+                            }
+                        });
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }).start();
+
 
 
         setContentView(R.layout.activity_main);
@@ -292,26 +313,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(Boolean th){
             if(th == true){
-                // Chek net every 5 seconds
-                mHandler = new Handler();
-                continue_or_stop = true;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (continue_or_stop) {
-                            try {
-                                Thread.sleep(5000);
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new NetCheck().execute();
-                                    }
-                                });
-                            } catch (Exception e) {
-                            }
-                        }
-                    }
-                }).start();
+
+                Toast.makeText(MainActivity.this, "th = true", Toast.LENGTH_SHORT).show();
+                
 
             }
             else{
@@ -329,28 +333,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 View sbView = snackbar.getView();
                 TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                 textView.setTextColor(Color.YELLOW);
+                snackbar.setDuration(9000);
                 snackbar.show();
-
-                // Chek net every 5 seconds
-                mHandler = new Handler();
-                continue_or_stop = true;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (continue_or_stop) {
-                            try {
-                                Thread.sleep(5000);
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new NetCheck().execute();
-                                    }
-                                });
-                            } catch (Exception e) {
-                            }
-                        }
-                    }
-                }).start();
             }
         }
     }

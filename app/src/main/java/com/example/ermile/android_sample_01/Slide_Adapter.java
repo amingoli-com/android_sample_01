@@ -434,26 +434,6 @@ public class Slide_Adapter extends AppCompatActivity {
                 textView.setTextColor(Color.YELLOW);
                 snackbar.show();
 
-                // Chek net every 5 seconds
-                mHandler = new Handler();
-                continue_or_stop = true;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (continue_or_stop) {
-                            try {
-                                Thread.sleep(7000);
-                                mHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new Slide_Adapter.NetCheck().execute();
-                                    }
-                                });
-                            } catch (Exception e) {
-                            }
-                        }
-                    }
-                }).start();
             }
         }
     }
