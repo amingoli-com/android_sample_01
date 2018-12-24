@@ -23,6 +23,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -153,13 +154,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        Menu menu = navigationView.getMenu();
-//
-//        MenuItem email = menu.findItem(R.id.mail);
-//        MenuItem ad = menu.add("aaa");
-//
-//        email.setTitle("hello");
-//        email.setVisible(true);
+        Menu menu = navigationView.getMenu();
+        MenuItem ad = menu.add("شما");
+        MenuItem login = menu.findItem(R.id.MU_login);
+        login.setTitle("ورود");
+
 
 
         // JSON

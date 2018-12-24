@@ -20,32 +20,32 @@
 
     </group>
 
-    <item android:title="Other">
+    <item android:title="Other" android:checkableBehavior="single">
         <menu>
-            <item
-                android:title="Archive"
-                android:icon="@drawable/ic_no_net"
-                android:id="@+id/archive" />
-            <item
-                android:title="Add 1"
-                android:icon="@drawable/ic_no_net"
-                android:id="@+id/add1" />
-            <item
-                android:title="Add 2"
-                android:icon="@drawable/ic_no_net"
-                android:id="@+id/add2" />
-            <item
-                android:title="Add 3"
-                android:icon="@drawable/ic_no_net"
-                android:id="@+id/add3" />
-            <item
-                android:title="Add 4"
-                android:icon="@drawable/ic_no_net"
-                android:id="@+id/add4" />
-            <item
-                android:title="Add 5"
-                android:icon="@drawable/ic_no_net"
-                android:id="@+id/add5" />
+            <!--<item-->
+                <!--android:title="Archive"-->
+                <!--android:icon="@drawable/ic_no_net"-->
+                <!--android:id="@+id/archive" />-->
+            <!--<item-->
+                <!--android:title="Add 1"-->
+                <!--android:icon="@drawable/ic_no_net"-->
+                <!--android:id="@+id/add1" />-->
+            <!--<item-->
+                <!--android:title="Add 2"-->
+                <!--android:icon="@drawable/ic_no_net"-->
+                <!--android:id="@+id/add2" />-->
+            <!--<item-->
+                <!--android:title="Add 3"-->
+                <!--android:icon="@drawable/ic_no_net"-->
+                <!--android:id="@+id/add3" />-->
+            <!--<item-->
+                <!--android:title="Add 4"-->
+                <!--android:icon="@drawable/ic_no_net"-->
+                <!--android:id="@+id/add4" />-->
+            <!--<item-->
+                <!--android:title="Add 5"-->
+                <!--android:icon="@drawable/ic_no_net"-->
+                <!--android:id="@+id/add5" />-->
 
         </menu>
 
