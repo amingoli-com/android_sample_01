@@ -1,36 +1,28 @@
 package com.example.ermile.android_sample_01;
 
 
-import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -56,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public Handler mHandler;
     public boolean continue_or_stop;
     Toolbar toolbars;
+    TextView netview;
 
     // user is login and user & pass is: 519
     int ids = 519;
@@ -85,6 +78,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Chek net
         new NetCheck().execute();
+
+        if (netview == null){
+            // Chek net every 5 seconds
+            mHandler = new Handler();
+            continue_or_stop = true;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (continue_or_stop) {
+                        try {
+                            Thread.sleep(11000);
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new NetCheck().execute();
+
+                                }
+                            });
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            }).start();
+        }
+
         // Chek net every 5 seconds
         mHandler = new Handler();
         continue_or_stop = true;
@@ -97,7 +115,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                new NetCheck().execute();
+                                boolean connected = true;
+                                ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                                if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                                    //we are connected to a network
+                                    connected = true;
+                                } else{ connected = false; }
+
+                                if (connected == false){
+                                    new NetCheck().execute();
+                                }
+
                             }
                         });
                     } catch (Exception e) {
@@ -105,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }).start();
+
+
 
 
 
@@ -150,9 +181,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Notification notif = nb.build();
                         NotificationManager notifManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
                         notifManager.notify(0, notif);
-
-                        String appname = response.getString("name");
-                        toolbars.setTitle(appname);
                     }
                     // toolbar and tab Top or Bottom?
 //                    is top
@@ -162,6 +190,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         viewPager = findViewById(R.id.viewPager_top);
                         tabLayout = findViewById(R.id.tabLayout_top);
                         toolbars = findViewById(R.id.toolbars_top);
+
+                        String appname = response.getString("name");
+                        toolbars.setTitle(appname);
 
                         setupViewPager(viewPager);
                         tabLayout.setupWithViewPager(viewPager);
@@ -176,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         viewPager = findViewById(R.id.viewPager_bottom);
                         tabLayout = findViewById(R.id.tabLayout_bottom);
                         toolbars = findViewById(R.id.toolbars_bottom);
+
+                        String appname = response.getString("name");
+                        toolbars.setTitle(appname);
 
                         setupViewPager(viewPager);
                         tabLayout.setupWithViewPager(viewPager);
@@ -314,7 +348,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected void onPostExecute(Boolean th){
             if(th == true){
 
-                Toast.makeText(MainActivity.this, "th = true", Toast.LENGTH_SHORT).show();
+
+                netview = findViewById(R.id.net);
+                netview.setText("HI");
+
+
+                if (th == true && netview == null){
+                    finish();
+                    startActivity(getIntent());
+                }
                 
 
             }
@@ -331,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         });
                 snackbar.setActionTextColor(Color.RED);
                 View sbView = snackbar.getView();
-                TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
                 textView.setTextColor(Color.YELLOW);
                 snackbar.setDuration(9000);
                 snackbar.show();

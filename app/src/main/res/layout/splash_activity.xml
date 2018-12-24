@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#cc6c0b0b"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:src="@drawable/sarshomar"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
+    <ProgressBar
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textColor="#fff"
+        android:layout_marginTop="10dp"
+        android:id="@+id/splash"
+        android:textSize="30dp"
+        android:text="درحال بارگذاری"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
