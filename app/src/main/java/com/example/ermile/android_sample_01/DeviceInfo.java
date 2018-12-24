@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -22,6 +23,11 @@ public class DeviceInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_info);
+
+
+
+
+
 
 
 
@@ -60,7 +66,22 @@ public class DeviceInfo extends AppCompatActivity {
         }
     }
     public void TOST(){
+        SwipeRefreshLayout swipe = findViewById(R.id.Refresh_deviceinfo);
+        swipe.setRefreshing(true);
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
         TextView textView = findViewById(R.id.txtview_deviceinfo);
+        if (textView != null){
+            swipe.setRefreshing(false);
+        }
+
         TelephonyManager manager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -74,19 +95,19 @@ public class DeviceInfo extends AppCompatActivity {
         }
 
         textView.setText(
-                "IMEI : " + manager.getDeviceId() + "\n"+
-                "Board : " + Build.BOARD + "\n"+
-                "Brand : " + Build.BRAND + "\n"+
-                "DEVICE : " + Build.DEVICE + "\n"+
-                "Display : " + Build.DISPLAY + "\n"+
-                "FINGERPRINT : " + Build.FINGERPRINT + "\n"+
-                "HARDWARE : " + Build.HARDWARE + "\n"+
-                "ID : " + Build.ID + "\n"+
-                "Manufacturer : " + Build.MANUFACTURER + "\n"+
-                "MODEL : " + Build.MODEL + "\n"+
-                "SERIAL : " + Build.SERIAL + "\n"+
-                "VERSION : " + Build.VERSION.SDK_INT + "\n"+
-                "Line 1 : " + manager.getLine1Number() + "\n"+
+                "IMEI : " + manager.getDeviceId() + "\n"+"\n"+"\n"+
+                "Board : " + Build.BOARD + "\n"+"\n"+
+                "Brand : " + Build.BRAND + "\n"+"\n"+
+                "DEVICE : " + Build.DEVICE + "\n"+"\n"+
+                "Display : " + Build.DISPLAY + "\n"+"\n"+
+                "FINGERPRINT : " + Build.FINGERPRINT + "\n"+"\n"+
+                "HARDWARE : " + Build.HARDWARE + "\n"+"\n"+
+                "ID : " + Build.ID + "\n"+"\n"+
+                "Manufacturer : " + Build.MANUFACTURER + "\n"+"\n"+
+                "MODEL : " + Build.MODEL + "\n"+"\n"+
+                "SERIAL : " + Build.SERIAL + "\n"+"\n"+
+                "VERSION : " + Build.VERSION.SDK_INT + "\n"+"\n"+
+                "Line 1 : " + manager.getLine1Number() + "\n"+"\n"+
                 "IMSI : " + manager.getSubscriberId()
         );
     }
