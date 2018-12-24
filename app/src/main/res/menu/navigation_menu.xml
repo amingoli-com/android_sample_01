@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:title="Inbox"
+            android:title="Login"
             android:icon="@drawable/ic_no_net"
-            android:id="@+id/mail" />
+            android:id="@+id/MU_login" />
 
         <item
-            android:title="Starred"
+            android:title="Sing Up"
             android:icon="@drawable/ic_no_net"
-            android:id="@+id/star" />
+            android:id="@+id/MU_singup" />
 
         <item
-            android:title="Trash"
+            android:title="Device Info"
             android:icon="@drawable/ic_no_net"
-            android:id="@+id/trash" />
+            android:id="@+id/MU_deviceinfo" />
 
     </group>
 

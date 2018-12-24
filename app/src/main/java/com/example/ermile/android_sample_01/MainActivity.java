@@ -53,11 +53,6 @@ import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    // show device info
-    public static final int REQUEST_CODE_PHONE_STATE_READ = 100;
-    private int checkedPermission = PackageManager.PERMISSION_DENIED;
-    //end device info
-
     public Handler mHandler;
     public boolean continue_or_stop;
     Toolbar toolbars;
@@ -85,15 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
 
-        // show device info
 
-        checkedPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-        if (Build.VERSION.SDK_INT >= 23 && checkedPermission != PackageManager.PERMISSION_GRANTED) {
-            requestPermission();
-        } else
-            checkedPermission = PackageManager.PERMISSION_GRANTED;
-
-        // end show device info
 
 
         // Chek net
@@ -112,16 +99,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // **
 
-
-        Menu menu = navigationView.getMenu();
-
-        MenuItem email = menu.findItem(R.id.mail);
-        MenuItem ad = menu.add("aaa");
-
-        email.setTitle("hello");
-        email.setVisible(true);
+//        Menu menu = navigationView.getMenu();
+//
+//        MenuItem email = menu.findItem(R.id.mail);
+//        MenuItem ad = menu.add("aaa");
+//
+//        email.setTitle("hello");
+//        email.setVisible(true);
 
 
         // JSON
@@ -217,12 +202,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int menuId = item.getItemId();
         switch (menuId) {
 
-            case R.id.mail:
-                startActivity(new Intent(MainActivity.this, SingUp.class));
-                break;
-            case R.id.star:
+            case R.id.MU_login:
                 startActivity(new Intent(MainActivity.this, Login.class));
                 break;
+            case R.id.MU_singup:
+                startActivity(new Intent(MainActivity.this, SingUp.class));
+                break;
+            case R.id.MU_deviceinfo:
+                startActivity(new Intent(MainActivity.this, DeviceInfo.class));
+                break;
+
 
         }
 
@@ -258,84 +247,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setAdapter(adapter);
     }
 
-    /////////////////////////////////////////////////////////////
-    private void requestPermission() {
-        Toast.makeText(MainActivity.this, "Requesting permission", Toast.LENGTH_SHORT).show();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            this.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                    REQUEST_CODE_PHONE_STATE_READ);
-        }
-    }
-
-
-    /**
-     * Method will be use to show device info
-     *
-     * @param v
-     */
-    public void showDeviceInfo(View v) {
-        TelephonyManager manager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
-        AlertDialog.Builder dBuilder = new AlertDialog.Builder(this);
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (checkedPermission != PackageManager.PERMISSION_DENIED) {
-            dBuilder.setTitle("Device Info");
-            // Name of underlying board like "GoldFish"
-            stringBuilder.append("Board : " + Build.BOARD + "\n");
-            // The consumer-visible brand with which the product/hardware will be associated, if any.
-            stringBuilder.append("Brand : " + Build.BRAND + "\n");
-            // The name of the industrial design.
-            stringBuilder.append("DEVICE : " + Build.DEVICE + "\n");
-            // A build ID string meant for displaying to the user
-            stringBuilder.append("Display : " + Build.DISPLAY + "\n");
-            // A string that uniquely identifies this build.
-            stringBuilder.append("FINGERPRINT : " + Build.FINGERPRINT + "\n");
-            // The name of the hardware
-            stringBuilder.append("HARDWARE : " + Build.HARDWARE + "\n");
-            // either a changelist number, or a label like "M4-rc20".
-            stringBuilder.append("ID : " + Build.ID + "\n");
-            // The manufacturer of the product/hardware.
-            stringBuilder.append("Manufacturer : " + Build.MANUFACTURER + "\n");
-            // The end-user-visible name for the end product.
-            stringBuilder.append("MODEL : " + Build.MODEL + "\n");
-            // A hardware serial number, if available.
-            stringBuilder.append("SERIAL : " + Build.SERIAL + "\n");
-            // The user-visible SDK version of the framework; its possible values are defined in Build.VERSION_CODES.
-            stringBuilder.append("VERSION : " + Build.VERSION.SDK_INT + "\n");
-
-            // Returns the phone number string for line 1, for example, the MSISDN for a GSM phone.
-            // Return null if it is unavailable
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                return;
-            }
-            stringBuilder.append("Line 1 : " + manager.getLine1Number() + "\n");
-            // Returns the unique device ID, for example, the IMEI for GSM and the MEID or ESN for CDMA phones.
-            // Return null if device ID is not available.
-            stringBuilder.append("Device ID/IMEI : " + manager.getDeviceId() + "\n");
-            // Returns the unique subscriber ID, for example,
-            // the IMSI for a GSM phone. Return null if it is unavailable.
-            stringBuilder.append("IMSI : " + manager.getSubscriberId());
-        } else {
-            dBuilder.setTitle("Permission denied");
-            stringBuilder.append("Can't access device info !");
-        }
-        dBuilder.setMessage(stringBuilder);
-        dBuilder.show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        switch (requestCode) {
-            case REQUEST_CODE_PHONE_STATE_READ:
-                if (grantResults.length > 0 && grantResults[0]== PackageManager.PERMISSION_GRANTED ) {
-                    checkedPermission = PackageManager.PERMISSION_GRANTED;
-                }
-                break;
-
-        }
-    }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
