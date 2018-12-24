@@ -13,16 +13,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -39,8 +42,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.ermile.android_sample_01.network.AppContoroler;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -48,6 +53,11 @@ import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    // show device info
+    public static final int REQUEST_CODE_PHONE_STATE_READ = 100;
+    private int checkedPermission = PackageManager.PERMISSION_DENIED;
+    //end device info
+
     public Handler mHandler;
     public boolean continue_or_stop;
     Toolbar toolbars;
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TabLayout tabLayout;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    RelativeLayout tab_top , tab_bottom;
+    RelativeLayout tab_top, tab_bottom;
 
     //Fragment's
     Web_view oneFragment = new Web_view();
@@ -73,20 +83,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        // show device info
+
+        checkedPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        if (Build.VERSION.SDK_INT >= 23 && checkedPermission != PackageManager.PERMISSION_GRANTED) {
+            requestPermission();
+        } else
+            checkedPermission = PackageManager.PERMISSION_GRANTED;
+
+        // end show device info
+
+
         // Chek net
         new NetCheck().execute();
 
 
-
-
-
         setContentView(R.layout.activity_main);
+
 
         // tab for framgent
         tab_bottom = findViewById(R.id.include_tabBottom);
         tab_top = findViewById(R.id.include_tabTop);
-
-
 
 
         //menu
@@ -94,8 +113,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
         // **
-
-
 
 
         Menu menu = navigationView.getMenu();
@@ -107,20 +124,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         email.setVisible(true);
 
 
-
-
-
-
         // JSON
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/app.json", null, new Response.Listener<JSONObject>()
-        {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/app.json", null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
 
                     // new version for app
                     int app_version = response.getInt("version");
-                    if (versionCode < app_version){
+                    if (versionCode < app_version) {
                         Notification.Builder nb = new Notification.Builder(MainActivity.this);
                         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                         nb.setContentTitle("بروزرسانی")
@@ -134,12 +146,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         notifManager.notify(0, notif);
 
                         String appname = response.getString("name");
-                            toolbars.setTitle(appname);
+                        toolbars.setTitle(appname);
                     }
                     // toolbar and tab Top or Bottom?
 //                    is top
                     boolean tab_pos = response.getBoolean("Tab_IsTop");
-                    if (tab_pos == true){
+                    if (tab_pos == true) {
                         tab_top.setVisibility(View.VISIBLE);
                         viewPager = findViewById(R.id.viewPager_top);
                         tabLayout = findViewById(R.id.tabLayout_top);
@@ -149,11 +161,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         tabLayout.setupWithViewPager(viewPager);
                         setSupportActionBar(toolbars);
                         //menu
-                        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(MainActivity.this , drawerLayout ,toolbars , R.string.open,R.string.close);
+                        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbars, R.string.open, R.string.close);
                         drawerLayout.addDrawerListener(myToggle);
                         myToggle.syncState();
 
-                    }else {
+                    } else {
                         tab_bottom.setVisibility(View.VISIBLE);
                         viewPager = findViewById(R.id.viewPager_bottom);
                         tabLayout = findViewById(R.id.tabLayout_bottom);
@@ -163,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         tabLayout.setupWithViewPager(viewPager);
                         setSupportActionBar(toolbars);
                         //menu
-                        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(MainActivity.this , drawerLayout ,toolbars , R.string.open,R.string.close);
+                        ActionBarDrawerToggle myToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbars, R.string.open, R.string.close);
                         drawerLayout.addDrawerListener(myToggle);
                         myToggle.syncState();
                     }
@@ -172,18 +184,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     e.printStackTrace();
                 }
             }
-        },new Response.ErrorListener()
-        {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
             }
-        });AppContoroler.getInstance().addToRequestQueue(req);
+        });
+        AppContoroler.getInstance().addToRequestQueue(req);
         // END JSON
 
 
-
         int ss = 1;
-        if (ss == 1){
+        if (ss == 1) {
             Notification.Builder nb = new Notification.Builder(MainActivity.this);
             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             nb.setContentTitle("gi gi gi gim")
@@ -198,26 +209,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-
-
-
-
-
-
-
     }
 
     //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int menuId = item.getItemId();
-        switch (menuId){
+        switch (menuId) {
 
             case R.id.mail:
-                startActivity(new Intent(MainActivity.this , SingUp.class));
+                startActivity(new Intent(MainActivity.this, SingUp.class));
                 break;
             case R.id.star:
-                startActivity(new Intent(MainActivity.this , Login.class));
+                startActivity(new Intent(MainActivity.this, Login.class));
                 break;
 
         }
@@ -228,33 +232,109 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     // back for device
     @Override
     public void onBackPressed() {
 
-        if (drawerLayout.isDrawerOpen(GravityCompat.START) )
-        {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else
-        {
+        } else {
             super.onBackPressed();
         }
     }
+
     // add fragment
-    private void setupViewPager(final ViewPager viewPager)
-    {
+    private void setupViewPager(final ViewPager viewPager) {
         final Util.ViewPagerAdapter adapter = new Util.ViewPagerAdapter(getSupportFragmentManager());
 
-        if (ids == 519){
-        adapter.addFragment(oneFragment,"اخبار سایت");
-        adapter.addFragment(twoFragment,"تیکت ها");
-        adapter.addFragment(treeFragment,"پیام ها");
-        }else {
-            adapter.addFragment(oneFragment,"اخبار سایت");
-            startActivity(new Intent(this,Login.class));
+        if (ids == 519) {
+            adapter.addFragment(oneFragment, "اخبار سایت");
+            adapter.addFragment(twoFragment, "تیکت ها");
+            adapter.addFragment(treeFragment, "پیام ها");
+        } else {
+            adapter.addFragment(oneFragment, "اخبار سایت");
+            startActivity(new Intent(this, Login.class));
         }
         viewPager.setAdapter(adapter);
+    }
+
+    /////////////////////////////////////////////////////////////
+    private void requestPermission() {
+        Toast.makeText(MainActivity.this, "Requesting permission", Toast.LENGTH_SHORT).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+                    REQUEST_CODE_PHONE_STATE_READ);
+        }
+    }
+
+
+    /**
+     * Method will be use to show device info
+     *
+     * @param v
+     */
+    public void showDeviceInfo(View v) {
+        TelephonyManager manager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
+        AlertDialog.Builder dBuilder = new AlertDialog.Builder(this);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (checkedPermission != PackageManager.PERMISSION_DENIED) {
+            dBuilder.setTitle("Device Info");
+            // Name of underlying board like "GoldFish"
+            stringBuilder.append("Board : " + Build.BOARD + "\n");
+            // The consumer-visible brand with which the product/hardware will be associated, if any.
+            stringBuilder.append("Brand : " + Build.BRAND + "\n");
+            // The name of the industrial design.
+            stringBuilder.append("DEVICE : " + Build.DEVICE + "\n");
+            // A build ID string meant for displaying to the user
+            stringBuilder.append("Display : " + Build.DISPLAY + "\n");
+            // A string that uniquely identifies this build.
+            stringBuilder.append("FINGERPRINT : " + Build.FINGERPRINT + "\n");
+            // The name of the hardware
+            stringBuilder.append("HARDWARE : " + Build.HARDWARE + "\n");
+            // either a changelist number, or a label like "M4-rc20".
+            stringBuilder.append("ID : " + Build.ID + "\n");
+            // The manufacturer of the product/hardware.
+            stringBuilder.append("Manufacturer : " + Build.MANUFACTURER + "\n");
+            // The end-user-visible name for the end product.
+            stringBuilder.append("MODEL : " + Build.MODEL + "\n");
+            // A hardware serial number, if available.
+            stringBuilder.append("SERIAL : " + Build.SERIAL + "\n");
+            // The user-visible SDK version of the framework; its possible values are defined in Build.VERSION_CODES.
+            stringBuilder.append("VERSION : " + Build.VERSION.SDK_INT + "\n");
+
+            // Returns the phone number string for line 1, for example, the MSISDN for a GSM phone.
+            // Return null if it is unavailable
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                return;
+            }
+            stringBuilder.append("Line 1 : " + manager.getLine1Number() + "\n");
+            // Returns the unique device ID, for example, the IMEI for GSM and the MEID or ESN for CDMA phones.
+            // Return null if device ID is not available.
+            stringBuilder.append("Device ID/IMEI : " + manager.getDeviceId() + "\n");
+            // Returns the unique subscriber ID, for example,
+            // the IMSI for a GSM phone. Return null if it is unavailable.
+            stringBuilder.append("IMSI : " + manager.getSubscriberId());
+        } else {
+            dBuilder.setTitle("Permission denied");
+            stringBuilder.append("Can't access device info !");
+        }
+        dBuilder.setMessage(stringBuilder);
+        dBuilder.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case REQUEST_CODE_PHONE_STATE_READ:
+                if (grantResults.length > 0 && grantResults[0]== PackageManager.PERMISSION_GRANTED ) {
+                    checkedPermission = PackageManager.PERMISSION_GRANTED;
+                }
+                break;
+
+        }
     }
 
 
