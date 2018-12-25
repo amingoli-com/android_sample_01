@@ -157,7 +157,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Menu menu = navigationView.getMenu();
         MenuItem ad = menu.add("شما");
         MenuItem login = menu.findItem(R.id.MU_login);
+        MenuItem singup = menu.findItem(R.id.MU_singup);
+        MenuItem deviceinfo = menu.findItem(R.id.MU_deviceinfo);
         login.setTitle("ورود");
+        singup.setTitle("ثبت نام");
+        deviceinfo.setTitle("اطلاعات گوشی");
 
 
 
@@ -295,13 +299,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupViewPager(final ViewPager viewPager) {
         final Util.ViewPagerAdapter adapter = new Util.ViewPagerAdapter(getSupportFragmentManager());
 
-        //             JSON            //
+        //JSON
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, "http://mimsg.ir/json_app/user_1000.json", null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-//                            array
+                    //array
                     int id_json = response.getInt("id_user");
 
                     if (id_json == ids) {

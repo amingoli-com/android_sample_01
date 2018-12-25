@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -46,17 +47,9 @@ public class Web_view extends Fragment {
         // Inflate the layout for this fragment
         View web_view_fragment = inflater.inflate(R.layout.web_view, container, false);
 
-
-
-
-
-
-
-
-
-
-
         final WebView webView = web_view_fragment.findViewById(R.id.web_view);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         final SwipeRefreshLayout swipe = web_view_fragment.findViewById(R.id.swipeContainer);
         //------------------------------------------------------------
         swipe.setRefreshing(true);
