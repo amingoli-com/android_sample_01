@@ -4,13 +4,12 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Tickets">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerview_ticket"
         android:layout_width="match_parent"
-        android:layout_marginBottom="10dp"
         android:layout_height="0dp"
         android:layout_weight="9">
 
@@ -18,17 +17,38 @@
 
 
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.8"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4">
 
-        <TextView
-            android:text="asdasdasdasd"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/send_mytiket"
+            android:rotation="180"
+            android:src="@drawable/ic_sendmas"
+            android:layout_margin="7dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content" />
 
+
+        <EditText
+            android:padding="7dp"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:maxHeight="160dp"
+            android:hint="پیام خود را بنویسید..."
+             />
+
+        <ImageView
+            android:id="@+id/chosefile_mytiket"
+            android:src="@drawable/ic_choseimg"
+            android:layout_width="0dp"
+            android:layout_margin="7dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
